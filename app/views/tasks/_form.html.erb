@@ -13,6 +13,7 @@
   <%= f.text_field :content %>
   <%= f.label :status, 'ステータス' %>
   <%= f.text_field :status %>
-  
+  <%= hidden_field_tag :users_id, session[:user_id] %>
+
   <%= f.submit '登録' %>
 <% end %>

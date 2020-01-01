@@ -1,6 +1,8 @@
 class TasksController < ApplicationController
+  before_action :require_user_logged_in, only: [:index, :show, :new]
+  
   def index
-    @tasks = Task.all
+    @tasks = Task.where(users_id: session[:user_id])
   end
   
   def show
@@ -13,7 +15,8 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-    
+    @task.users_id = session[:user_id]
+
     if @task.save
       flash[:success] = 'Task が正常に登録されました'
       redirect_to @task
@@ -50,6 +53,6 @@ class TasksController < ApplicationController
   private
   
   def task_params
-    params.require(:task).permit(:content, :status)
+    params.require(:task).permit(:content, :status, :users_id)
   end
 end
