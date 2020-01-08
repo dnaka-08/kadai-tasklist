@@ -1,8 +1,8 @@
 class TasksController < ApplicationController
-  before_action :require_user_logged_in, only: [:index, :show, :new]
+  before_action :require_user_logged_in, only: [:index, :show, :new, :edit]
   
   def index
-    @tasks = Task.where(users_id: session[:user_id])
+    @tasks = Task.where(user_id: session[:user_id])
   end
   
   def show
@@ -15,7 +15,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
-    @task.users_id = session[:user_id]
+    @task.user_id = session[:user_id]
 
     if @task.save
       flash[:success] = 'Task が正常に登録されました'
@@ -53,6 +53,6 @@ class TasksController < ApplicationController
   private
   
   def task_params
-    params.require(:task).permit(:content, :status, :users_id)
+    params.require(:task).permit(:content, :status, :user_id)
   end
 end
