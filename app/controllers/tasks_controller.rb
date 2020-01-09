@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :require_user_logged_in, only: [:index, :show, :new, :edit]
+  before_action :require_user_logged_in, only: [:index, :show, :new, :create, :edit, :update, :destroy]
   
   def index
     @tasks = Task.where(user_id: session[:user_id])
@@ -7,6 +7,9 @@ class TasksController < ApplicationController
   
   def show
     @task = Task.find_by(id: params[:id], user_id: session[:user_id])
+    if !@task
+      redirect_to login_path
+    end
   end
 
   def new
