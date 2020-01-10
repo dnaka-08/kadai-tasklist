@@ -8,7 +8,7 @@ class TasksController < ApplicationController
   def show
     @task = Task.find_by(id: params[:id], user_id: session[:user_id])
     if !@task
-      redirect_to login_path
+      redirect_to root_path
     end
   end
 
