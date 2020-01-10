@@ -30,7 +30,10 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task = Task.find(params[:id])
+    @task = Task.find_by(id: params[:id], user_id: session[:user_id])
+    if !@task
+      redirect_to root_path
+    end
   end
 
   def update
