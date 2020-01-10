@@ -37,7 +37,7 @@ class TasksController < ApplicationController
   end
 
   def update
-    @task = Task.find(params[:id])
+    @task = Task.find_by(id: params[:id], user_id: session[:user_id])
     
     if @task.update(task_params)
       flash[:success] = 'Task は正常に更新されました'
@@ -49,7 +49,7 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task = Task.find(params[:id])
+    @task = Task.find_by(id: params[:id], user_id: session[:user_id])
     @task.destroy
     
     flash[:success] = 'Task は正常に削除されました'
